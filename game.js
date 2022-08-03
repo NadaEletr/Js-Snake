@@ -1,12 +1,14 @@
-import{SNAKE_SPEED,update as updateSnake,draw as drawSnake} from "./snake.js"
+import{SNAKE_SPEED,update as updateSnake,draw as drawSnake,} from "./snake.js"
 let lastRenderTime =0;
 
 
 function update(){
     updateSnake();
 }
-function draw(board){
+function draw(){
+    
     drawSnake();
+
 }
 
 function loop(currentTime){
