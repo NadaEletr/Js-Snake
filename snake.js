@@ -13,6 +13,7 @@ let inputDirection={x:1 , y:0};
 
 export function update(){
     moveSnakeAutomatically();
+
 }
 
 function moveSnakeAutomatically(){
@@ -40,8 +41,8 @@ window.addEventListener('keydown',e=>{
    
 })
 
-function getSnakeInputDirection(){
-
+export function getSnakeHead(){
+    return body[0];
 }
 
 export function draw(){
