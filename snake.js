@@ -1,4 +1,4 @@
-export const SNAKE_SPEED=2; // 2 times per second
+export const SNAKE_SPEED=5; // 2 times per second
 
 const Direction = {
     UP: 1,
@@ -13,7 +13,6 @@ let inputDirection={x:1 , y:0};
 
 export function update(){
     moveSnakeAutomatically();
-
 }
 
 function moveSnakeAutomatically(){
@@ -45,14 +44,39 @@ export function getSnakeHead(){
     return body[0];
 }
 
-export function draw(){
-    let board =document.getElementById("game-board");
-    board.innerHTML="";
+export function draw(game_board){
+    game_board.innerHTML="";
     body.forEach((part)=>{
         const div =document.createElement('div'); // create div inside game board
         div.style.gridColumnStart=part.x;
         div.style.gridRowStart=part.y;
         div.classList.add("snake");
-        board.appendChild(div);
+        game_board.appendChild(div);
     })
+}
+
+export function isSnakeOnFood(foodPosition){
+    body.forEach(part=>{
+        if(part.x==foodPosition.x && part.y==foodPosition.y)
+            return true;
+    })
+    return false;
+}
+
+export function isSnakeEatingFood(foodPosition){
+    if(body[0].x == foodPosition.x && body[0].y == foodPosition.y){
+        expandSnake(foodPosition)
+        return true;
+    }
+    return false;
+}
+
+function expandSnake(foodPosition){
+    body.length++;
+    for(let i=body.length-1;i>0;i--)
+    {
+        body[i]=body[i-1];
+    }
+    body[0].x=foodPosition.x;
+    body[0].y=foodPosition.y;
 }

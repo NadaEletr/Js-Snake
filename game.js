@@ -1,8 +1,8 @@
 import{SNAKE_SPEED,update as updateSnake,draw as drawSnake,} from "./snake.js"
 import {isSnakeOutOfBoundaris} from "./game-board.js"
+import{drawFood, updateFood} from "./food.js"
 let lastRenderTime =0;
-let gameFinished= false;
-
+let game_board= document.getElementById("game-board");
 
 function loop(currentTime){
     if(isSnakeOutOfBoundaris())
@@ -13,7 +13,9 @@ function loop(currentTime){
         return;
     lastRenderTime=currentTime;
     updateSnake(); //logic
-    drawSnake();
+    updateFood();
+    drawSnake(game_board);
+    drawFood(game_board);
     checkDeath();
     
 }
@@ -22,5 +24,5 @@ function checkDeath(){
     
 }
 
-var lastRender = 0
+
 window.requestAnimationFrame(loop)
