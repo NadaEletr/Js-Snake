@@ -1,8 +1,9 @@
 
 import {isSnakeOnFood,isSnakeEatingFood}from "./snake.js"
+import {getRandomBoardPosition} from "./game-board.js"
 let food ={x:5,y:10};
 const max=21;
-const min =0;
+const min =1;
 
 let div;
 
@@ -17,14 +18,18 @@ export function drawFood(game_board){
 }
 
 export function updateFood(){
-    if(isSnakeOnFood(food) || isSnakeEatingFood(food)){
-        getRandomFoodPosition();
-    } 
-       
+    if(isSnakeEatingFood(food)){
+        food.x=getRandomFoodPosition().x;
+        food.y=getRandomFoodPosition().y;
+    }    
 }
 
 
 function getRandomFoodPosition(){
-    food.x=Math.floor(Math.random() * (max - min + 1)) + min;
-    food.y=Math.floor(Math.random() * (max - min + 1)) + min;
+    let newFoodPosition;
+    while(isSnakeOnFood(food) || newFoodPosition==null){
+        newFoodPosition= getRandomBoardPosition(); 
+    }
+    return newFoodPosition;
+    
 }

@@ -9,3 +9,12 @@ export function isSnakeOutOfBoundaris(){
     }
     return false;
 }
+
+export function getRandomBoardPosition(){
+
+    return{
+        x:Math.floor(Math.random() *BOARD_SIZE )+1,
+        y:Math.floor(Math.random() * BOARD_SIZE)+1
+    }
+    
+}

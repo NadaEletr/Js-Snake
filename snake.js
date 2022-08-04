@@ -1,5 +1,5 @@
 export const SNAKE_SPEED=5; // 2 times per second
-
+import {isSnakeOutOfBoundaris} from "./game-board.js"
 const Direction = {
     UP: 1,
     DOWN:2,
@@ -11,14 +11,21 @@ const body = [{x:12,y:11,d:Direction.RIGHT},{x:11,y:11},{x:10,y:11}];
 let inputDirection={x:1 , y:0};
 
 
-export function update(){
+export function update() {
     moveSnakeAutomatically();
+    return checkSnakeDeath();
 }
 
 function moveSnakeAutomatically(){
     const snakeHead={x:body[0].x+inputDirection.x,y:body[0].y+inputDirection.y,d:body[0].d};
     body.unshift(snakeHead);//add the new head to beginning of snake
     body.pop();
+}
+
+function checkSnakeDeath(){
+    if(isSnakeOutOfBoundaris() || isSnakeCollapsed())
+        return true;
+    return false;
 }
 
 
@@ -64,7 +71,8 @@ export function isSnakeOnFood(foodPosition){
 }
 
 export function isSnakeEatingFood(foodPosition){
-    if(body[0].x == foodPosition.x && body[0].y == foodPosition.y){
+    
+    if(getSnakeHead().x == foodPosition.x && getSnakeHead().y == foodPosition.y){
         expandSnake(foodPosition)
         return true;
     }
@@ -73,10 +81,23 @@ export function isSnakeEatingFood(foodPosition){
 
 function expandSnake(foodPosition){
     body.length++;
-    for(let i=body.length-1;i>0;i--)
-    {
-        body[i]=body[i-1];
-    }
     body[0].x=foodPosition.x;
     body[0].y=foodPosition.y;
+     for(let i=body.length-1;i>0;i--)
+    {
+         body[i]=body[i-1];
+    }
+    
+}
+
+export function isSnakeCollapsed(){
+
+    for(let i=1 ;i<body.length; i++){
+        if(body[0].x==body[i].x && body[0].y==body[i].y){
+            console.log("true");
+            return true;
+        }
+    }
+    return false;
+    
 }
